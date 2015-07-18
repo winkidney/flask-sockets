@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import logging
+
 
 def log_request(self):
     log = self.server.log
@@ -29,14 +31,13 @@ class SocketMiddleware(object):
 
     def __call__(self, environ, start_response):
         path = environ['PATH_INFO']
-
         if path in self.ws.url_map:
             handler = self.ws.url_map[path]
-            environment = environ['wsgi.websocket']
+            environment_ws = environ['wsgi.websocket']
 
             with self.app.app_context():
                 with self.app.request_context(environ):
-                    handler(environment)
+                    handler(environment_ws)
                     return []
         else:
             return self.wsgi_app(environ, start_response)
@@ -62,6 +63,20 @@ class Sockets(object):
 
     def add_url_rule(self, rule, _, f, **options):
         self.url_map[rule] = f
+
+    def app_route(self, rule, **options):
+        """
+        Flask style route decorator.
+        Register a websocket class-style view.
+        Given class will be instanced and `__call__` will be called
+        when websocket connection created.
+        """
+
+        def decorator(cls):
+            endpoint = options.pop('endpoint', None)
+            self.add_url_rule(rule, endpoint, cls(), **options)
+            return cls
+        return decorator
 
 # CLI sugar.
 if 'Worker' in locals():
