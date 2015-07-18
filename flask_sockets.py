@@ -10,11 +10,8 @@ def log_request(self):
 
 
 # Monkeys are made for freedom.
-try:
-    import gevent
-    from geventwebsocket.gunicorn.workers import GeventWebSocketWorker as Worker
-except ImportError:
-    pass
+import gevent
+from geventwebsocket.gunicorn.workers import GeventWebSocketWorker as Worker
 
 if 'gevent' in locals():
     # Freedom-Patch logger for Gunicorn.
