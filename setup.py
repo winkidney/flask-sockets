@@ -10,13 +10,13 @@ from setuptools import setup
 
 
 setup(
-    name='Flask-Sockets',
+    name='Flask-Sockets-Tornado',
     version='0.1',
-    url='https://github.com/kennethreitz/flask-sockets',
+    url='https://github.com/winkidney/flask-sockets',
     license='See License',
-    author='Kenneth Reitz',
-    author_email='_@kennethreitz.com',
-    description='Elegant WebSockets for your Flask apps.',
+    author='winkidney',
+    author_email='winkidney@gmail.com',
+    description='Elegant WebSockets for your Flask apps.Tornado style app included',
     long_description=__doc__,
     py_modules=['flask_sockets'],
     zip_safe=False,
