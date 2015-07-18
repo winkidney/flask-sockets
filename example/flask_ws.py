@@ -20,4 +20,4 @@ def echo_socket(ws):
 @sockets.app_route('/echo2')
 class WSTest(WebSocketApplication):
     def on_message(self, message, *args, **kwargs):
-        self.ws.send("this is the client message from %s: %s" % (request.remote_addr, message))
+        self.write_message("this is the client message from %s: %s" % (request.remote_addr, message))
