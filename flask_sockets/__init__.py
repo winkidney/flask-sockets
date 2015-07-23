@@ -74,7 +74,10 @@ class Sockets(object):
 
         def decorator(cls):
             endpoint = options.pop('endpoint', None)
-            self.add_url_rule(rule, endpoint, cls(), **options)
+
+            def get_instance(ws):
+                return cls()(ws)
+            self.add_url_rule(rule, endpoint, get_instance, **options)
             return cls
         return decorator
 
