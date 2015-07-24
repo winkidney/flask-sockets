@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import logging
-
 
 def log_request(self):
     log = self.server.log
