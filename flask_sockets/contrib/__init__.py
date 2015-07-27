@@ -11,6 +11,9 @@ from geventwebsocket.gunicorn.workers import GeventWebSocketWorker
 from geventwebsocket.protocols.base import BaseProtocol
 
 
+OPCODE_PING = 0x9
+
+
 class WebSocketApplication(object):
     protocol_class = BaseProtocol
 
@@ -49,6 +52,9 @@ class WebSocketApplication(object):
     def write_frame(self, message, opcode):
         self.ws.send_frame(message, opcode)
 
+    def ping(self, message="ping"):
+        self.write_frame(message, OPCODE_PING)
+
     def close(self):
         self.ws.close()
 
@@ -61,6 +67,9 @@ class WebSocketClient(object):
     protocol_class = BaseProtocol
 
     def __init__(self, ws):
+        """
+        :type ws: geventwebsocket.websocket.WebSocket
+        """
         self.ws = ws
         self.id = str(uuid.uuid4())
         self.protocol = self.protocol_class(self)
@@ -70,11 +79,7 @@ class WebSocketClient(object):
         self.thread = gevent.spawn(self.run)
 
     def run(self):
-        """
-        :type ws: geventwebsocket.websocket.WebSocket
-        """
         self.protocol.on_open()
-
         while True:
             try:
                 message = self.ws.receive()

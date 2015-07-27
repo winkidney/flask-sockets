@@ -5,6 +5,8 @@ from time import sleep
 from ws4py.client.threadedclient import WebSocketClient
 # from ws4py.client.tornadoclient import TornadoWebSocketClient as WebSocketClient
 # from ws4py.client.geventclient import WebSocketClient
+from ws4py.framing import OPCODE_PING, OPCODE_PONG
+from ws4py.messaging import Message
 
 HOST = "ws://127.0.0.1:9000/echo3"
 
@@ -21,6 +23,12 @@ class EchoClient(WebSocketClient):
     def closed(self, code, reason):
         print(("Closed down", code, reason))
 
+    def ping(self):
+        self.send(Message(OPCODE_PING).single())
+
+    def pong(self):
+        self.send(Message(OPCODE_PONG).single())
+
     def received_message(self, m):
         print("Got turn back message: %s" % m)
         if len(m) == 175:
@@ -29,8 +37,8 @@ class EchoClient(WebSocketClient):
 def run(cid):
     client = EchoClient(HOST, cid)
     client.connect()
-    client.send("hello1")
-    client.send("hello2")
+    # client.send("hello1")
+    # client.send("hello2")
     while True:
         sleep(10)
 
