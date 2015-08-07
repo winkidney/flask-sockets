@@ -31,7 +31,7 @@ class SocketMiddleware(object):
         path = environ['PATH_INFO']
         if path in self.ws.url_map:
             handler = self.ws.url_map[path]
-            environment_ws = environ['wsgi.websocket']
+            environment_ws = environ.get('wsgi.websocket')
 
             with self.app.app_context():
                 with self.app.request_context(environ):
