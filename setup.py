@@ -6,7 +6,11 @@ Flask-Sockets
 
 Elegant WebSockets for your Flask apps.
 """
-from setuptools import setup
+import os
+from setuptools import setup, find_packages
+
+
+here = os.path.abspath(os.path.dirname(__file__))
 
 
 setup(
@@ -18,13 +22,13 @@ setup(
     author_email='winkidney@gmail.com',
     description='Elegant WebSockets for your Flask apps.Tornado style app included',
     long_description=__doc__,
-    py_modules=['flask_sockets'],
+    packages=find_packages(here, exclude=['examples']),
     zip_safe=False,
     include_package_data=True,
     platforms='any',
     install_requires=[
         'Flask',
-        'gevent>=1.0.0',
+        'gevent',
         'gevent-websocket'
     ],
     classifiers=[
