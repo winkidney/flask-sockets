@@ -15,7 +15,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 setup(
     name='Flask-Sockets-Tornado',
-    version='0.1',
+    version='0.1.1',
     url='https://github.com/winkidney/flask-sockets',
     license='See License',
     author='winkidney',
