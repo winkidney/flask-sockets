@@ -5,6 +5,7 @@ Websocket application for flask-sockets inspired by gevent-websocket and tornado
 """
 import logging
 import uuid
+
 import gevent
 from geventwebsocket import WebSocketError
 from geventwebsocket.gunicorn.workers import GeventWebSocketWorker

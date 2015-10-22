@@ -34,6 +34,7 @@ class EchoClient(WebSocketClient):
         if len(m) == 175:
             self.close(reason='bye bye')
 
+
 def run(cid):
     client = EchoClient(HOST, cid)
     client.connect()
@@ -41,6 +42,7 @@ def run(cid):
     # client.send("hello2")
     while True:
         sleep(10)
+
 
 def multi_run():
     threads = [Thread(target=run, args=(x, )) for x in range(20)]
