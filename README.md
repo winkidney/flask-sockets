@@ -52,6 +52,26 @@ class WSTest(WebSocketApplication):
 ```bash
 $gunicorn -b :9000 -k flask_sockets.worker flask_ws:app --debug  --log-level info
 ```
+If you want to use your own worker and add more support(for example client manager).
+Just write your app like
+
+```python
+from flask_sockets.contrib import WSWorker
+
+@sockets.route('/echo3')
+def run_manager(ws):
+    WSWorker.manager.register(ws)
+```
+
+It will launch a client manager and you can customize your code in `WebSocketClient`
+and the manager to manage different clients for multi-users. 
+
+Then launch them by:
+
+```bash
+$gunicorn -b :9000 -k your_app:WSWroker your_app:app --debug  --log-level info
+```
+
 
 ## Thanks
 Inspired by:
